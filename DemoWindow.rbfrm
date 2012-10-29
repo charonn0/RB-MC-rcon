@@ -453,7 +453,7 @@ End
 #tag Events PushButton2
 	#tag Event
 		Sub Action()
-		  MCrconSocket1.SendCommand(TextField1.Text)
+		  Call MCrconSocket1.SendCommand(TextField1.Text)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
