@@ -5,6 +5,7 @@ method:
     Dim sock As New MCrconSocket
     sock.Address = "minecraft.example.com"
     sock.Port = 25566
+    sock.Password = "seekrit"
     sock.Connect
     Call sock.SendCommand("/list")
 
