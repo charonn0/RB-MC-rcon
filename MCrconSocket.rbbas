@@ -16,19 +16,20 @@ Inherits TCPSocket
 		  ID = mb.Int32Value(4)
 		  type = mb.Int32Value(8)
 		  Dim s As String = mb.CString(12)
-		  If Not Response(type, ID, s) Then OutStandingRequests.Remove(ID)
+		  If Response(type, ID, s) Then OutStandingRequests.Remove(ID)
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Sub SendComplete(userAborted as Boolean)
-		  '
+		  #pragma Unused userAborted
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Function SendProgress(bytesSent as Integer, bytesLeft as Integer) As Boolean
-		  '
+		  #pragma Unused bytesSent
+		  #pragma Unused bytesLeft
 		End Function
 	#tag EndEvent
 
@@ -63,7 +64,7 @@ Inherits TCPSocket
 
 	#tag Method, Flags = &h1
 		Protected Function NextID() As Integer
-		  'The ID is any 4-byte value expressed as an Integer. The MC server will use this value 
+		  'The ID is any 4-byte value expressed as an Integer. The MC server will use this value
 		  'as the ResponseID.
 		  LastID = LastID + 1
 		  Return LastID
@@ -71,7 +72,7 @@ Inherits TCPSocket
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function SendCommand(Command As String, Type As Integer = 2) As Integer
+		Function SendCommand(Command As String, Type As Integer = Type_Command) As Integer
 		  Dim ID As Integer = NextID
 		  Dim mb As MemoryBlock = MCPacket(Type, ID, Command)
 		  Me.Write(mb)
