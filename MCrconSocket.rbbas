@@ -16,7 +16,7 @@ Inherits TCPSocket
 		  ID = mb.Int32Value(4)
 		  type = mb.Int32Value(8)
 		  Dim s As String = mb.CString(12)
-		  If Response(type, ID, s) Then OutStandingRequests.Remove(ID)
+		  If Not Response(type, ID, s) Then OutStandingRequests.Remove(ID)
 		End Sub
 	#tag EndEvent
 
