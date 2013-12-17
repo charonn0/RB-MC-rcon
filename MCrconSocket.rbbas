@@ -10,13 +10,16 @@ Inherits TCPSocket
 
 	#tag Event
 		Sub DataAvailable()
-		  Dim mb As MemoryBlock = Me.ReadAll()
-		  Dim len, type, ID As Integer
-		  len = mb.Int32Value(0)
-		  ID = mb.Int32Value(4)
-		  type = mb.Int32Value(8)
-		  Dim s As String = mb.CString(12)
-		  If Not Response(type, ID, s) Then OutStandingRequests.Remove(ID)
+		  While Me.Lookahead.LenB > 0
+		    Dim data As MemoryBlock = Me.Lookahead
+		    Dim len As Integer = data.Int32Value(0)
+		    Dim mb As MemoryBlock = Me.Read(len + 4)
+		    Dim type, ID As Integer
+		    ID = mb.Int32Value(4)
+		    type = mb.Int32Value(8)
+		    Dim s As String = mb.CString(12)
+		    If Not Response(type, ID, s) Then OutStandingRequests.Remove(ID)
+		  Wend
 		End Sub
 	#tag EndEvent
 
